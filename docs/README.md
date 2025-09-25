@@ -76,3 +76,99 @@ Assume that BFS does `early goal test`, can save one more branch factor.
 4. Cost optimal if action costs are all identical (and several other cases)
 
 Default assumptions: `b` finite, `d` finite (contains solution), `m` infinite, all costs > ε > 0
+### Graph Search Algorithm (Version 1)
+```python
+Function GraphSearchV1(initial_state, actions, T, isGoal, cost):
+    initial_node = Node(initial_state, NULL)
+    frontier = {initial_node}
+    reached = {initial_state: initial_node}
+    while frontier not empty:
+        current = frontier.pop()
+        if isGoal(current.state): return current.getPath()
+        for a in actions(current.state):
+            successor = Node(T(current.state, a), current)
+            if successor.state not in reached:
+                frontier.push(successor)
+                reached.insert(successor.state: successor)
+    return failure
+```
+Nodes are `never revisited`, may omit `optimal path`.\
+Since `BFS` / `DFS` / `DLS` / `IDS` all cannot guarantee optimality, 
+using `Graph Search Version 1` decreases complexity 
+(since the resultant search tree excludes ALL
+redundant paths) without loss of expected performance!
+
+### Graph Search Algorithm (Version 2)
+```python
+Function GraphSearchV1(initial_state, actions, T, isGoal, cost):
+    initial_node = Node(initial_state, NULL)
+    frontier = {initial_node}
+    reached = {initial_state: initial_node}
+    while frontier not empty:
+        current = frontier.pop()
+        if isGoal(current.state): return current.getPath()
+        for a in actions(current.state):
+            successor = Node(T(current.state, a), current)
+            if successor.state not in reached or
+                successor.getCost() < reached[successor.state].getCost():
+                    frontier.push(successor)
+                    reached.insert(successor.state: successor)
+    return failure
+```
+More relaxed constraint on paths that are considered, also considers paths with lower path cost.
+### Summary
+Time, space for everyone is `O(|V|+|E|)`
+### Notes
+For CS3243, unless otherwise mentioned, `assume tree search`.\
+For graph search, assume `V2` for UCS and `V1` for other uninformed search algorithm.
+## Week 3 - Informed Search: Incorporating Domain Knowledge
+Systematic search affords `completeness`, assuming either: search space finite, or solution exists.\
+Evaluation functions: Greedy Best-First Search priority: `f(n) = h(n)`\
+A* Search priority: `f(n) = g(n) + h(n)`
+### Best-First Search Algorithm
+```python
+function BEST-FIRST-SEARCH(problem, f) returns a solution node or failure
+    node <NODE(STATE=problem.INITIAL)
+    frontier <a priority queue ordered by f, with node as an element
+    reached <- a lookup table, with one entry with key problem.INITIAL and value node
+    while not IS-EMPTY(frontier) do
+        node < POP(frontier)
+        if problem.IS-GOAL(node.STATE) then return node
+        for each child in EXPAND(problem, node) do
+            s<child.STATE
+            if s is not in reached or child.PATH-COST < reached[s].PATH-COST then
+                reached[s] < child
+                add child to frontier
+    return failure
+
+function EXPAND(problem, node) yields nodes
+    s <- node.STATE
+    for each action in problem.ACTIONS(s) do
+    s` <- problem.RESULT(s, action)
+    cost < node.PATH-COST + problem.ACTION-COST(s, action, s')
+    yield NODE(STATE=s`, PARENT=node, ACTION=action, PATH-COST=cost)
+```
+`Tree-search` implementation is `incomplete`!\
+`Graph-search` implementation is `complete` if search space is `finite`.\
+`Not optimal` under either tree search or graph search.
+## A* search
+`Completeness` requires same criteria as UCS.\
+`Optimality` depends on `h`.\
+`GSV1` may skip optimal path.\
+`GSV2` and `Tree search` returns optimal path.
+## Graph Search Algorithm (Version 3)
+```python
+Function GraphSearchV3(initial_state, actions, T, isGoal, cost):
+    frontier = {Node(initial_state, NULL)}
+    reached = {}
+    while frontier not empty:
+        current = frontier.pop()
+        reached.insert(current.state: current)
+        if isGoal(current.state): return current.getPath()
+        for a in actions(current.state):
+            successor = Node(T(current.state, a), current)
+            if successor.state not in reached:
+                frontier.push(successor)
+    return failure
+```
+*Note: with typical interpretations, dominance requires admissibility.*
