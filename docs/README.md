@@ -232,8 +232,7 @@ Constructing models:
 1. Bottom-up: What variables can you efficiently calculate? What can these variables model?
 2. Top-down: What (dependent) variables do I want to model / approximate? What are the (independent) variables that help to calculate these?
 ## Week 5 - Local Search: Goal Versus Path Search
-We only want legal goal state values.\
-Local search – goal determination
+We only want legal goal state values. Local search – goal determination
 - Abandon systematic search – ignore path and path cost
 - Only maintain “best” successor state – greedy approach
 
@@ -302,7 +301,7 @@ Function BeamSearch(random_initial_state, isGoal, actions, T, choose_best_k):
                 if isGoal(new_s): return new_s
                 new_frontier.push(new_s)
         frontier = choose_best_k(new_frontier) 
-# We may also apply stochastic beam search where instead of choosing the best k, it chooses successors with probability proportional to the successor’s value
+# We may also apply stochastic beam search: chooses successors with probability proportional to the successor’s value
 ```
 Notice that we may allow states with lower values than their parents to be added since
 `choose_best_k` will simply choose the best `k` successor states generated.
