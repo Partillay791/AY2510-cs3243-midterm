@@ -259,8 +259,6 @@ Hill-climbing **may not** return a solution, it may get stuck at
 - Local Maxima
 - Shoulder or Plateau
 - Ridge (sequence of local maxima)
-
-![img.png](img.png)
 ### Hill-climbing variants:
 #### A. Stochastic hill climbing
 - Chooses randomly among states with `f`-values better than `current`
