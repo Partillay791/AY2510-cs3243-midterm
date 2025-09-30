@@ -313,12 +313,10 @@ Notice that we may allow states with lower values than their parents to be added
 2. When proving admissibility or consistency, maintain good use of mathematical symbols, e.g. &forall;!
 3. Use keywords like `minimally`
 4. When giving a transition model, mention that given a `parent state` and `action`...
-5. Node representation: store `parent node`!!!
-6. The need to traverse the whole graph (let's say I need to fine `h*` for each point) precludes `graph search`, `G` needs to be acyclic and finite though.
-7. States can be represented via a `frontier`.
-8. `Node`: what can I store as I go along?
-9. Pre-processing helps if doing it once before search helps than doing the step at every time point during traversal.
-10. Question 2: `Give a proof sketch`
-11. `Heuristic` question is very long, 1.5 pages in description, nothing about dominance in it, only `admissibility`.
-12. for `k` beam search, enqueue `k` best, then pop `k` best.
-13. Determine consistency: check all possible pairs of subsequent neighbours
+5. The need to traverse the whole graph (let's say I need to fine `h*` for each point) precludes `graph search`, `G` needs to be acyclic and finite though.
+6. States can be represented via a `frontier`.
+7. `Node`: what can I store as I go along?
+8. Pre-processing helps if doing it once before search helps than doing the step at every time point during traversal.
+9. Question 2: `Give a proof sketch`
+10. `Heuristic` question is very long, 1.5 pages in description, nothing about dominance in it, only `admissibility`. 
+11. Determine consistency: check all possible pairs of subsequent neighbours
